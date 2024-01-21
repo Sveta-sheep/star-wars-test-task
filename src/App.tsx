@@ -1,14 +1,16 @@
-import { Box, SxProps } from '@mui/material';
+import { Box, SxProps, ThemeProvider } from '@mui/material';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorFallbackUI, ToastProvider } from 'components';
 import { errorHandler } from 'helpers/errorHandler';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { RootRouters } from 'routers';
+import { theme } from 'styles/theme';
 
 const sx: SxProps = {
-  backgroundColor: '#282c34',
+  backgroundColor: 'secondary.main',
   minHeight: '100vh',
+  padding: 4,
 };
 
 const queryClient = new QueryClient({
@@ -27,12 +29,14 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Box sx={sx}>
-        <ErrorBoundary FallbackComponent={ErrorFallbackUI}>
-          <RootRouters />
-          <ToastProvider />
-        </ErrorBoundary>
-      </Box>
+      <ThemeProvider theme={theme}>
+        <Box sx={sx}>
+          <ErrorBoundary FallbackComponent={ErrorFallbackUI}>
+            <RootRouters />
+            <ToastProvider />
+          </ErrorBoundary>
+        </Box>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
