@@ -5,13 +5,15 @@ import { headerDescription, noCharactersText } from 'components/CharacterList/co
 import { Loader } from 'components/Loader';
 import { Pagination } from 'components/Pagination/Pagination';
 import { CHARACTERS_PER_PAGE } from 'components/Pagination/usePagination';
+import { SearchInput } from 'components/SearchInput';
 import { Title } from 'components/Title';
 import { useGetCharacterList } from 'queries';
 import { useMemo, useState } from 'react';
 
 export const CharacterList = () => {
   const [activePage, setActivePage] = useState(1);
-  const { characterList, count, isLoading } = useGetCharacterList({ page: activePage });
+  const [query, setQuery] = useState('');
+  const { characterList, count, isLoading } = useGetCharacterList({ page: activePage, query });
 
   const noCharactersJSX = useMemo(
     () => (
@@ -35,6 +37,9 @@ export const CharacterList = () => {
   return (
     <Stack gap={2}>
       <Title description={headerDescription} />
+      <Box display='flex' justifyContent='center'>
+        <SearchInput setQuery={setQuery} />
+      </Box>
       <Box>
         <CharacterColumns />
         {/*57px is the height of one character item*/}

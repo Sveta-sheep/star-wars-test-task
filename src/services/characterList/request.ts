@@ -2,9 +2,9 @@ import axiosClient from 'api/axiosClient';
 import { GetCharacterListParams, GetCharacterListResponse } from 'services/characterList/types';
 
 const getRequestParam = (page?: number, query?: string) => {
-  if (page) return `/?page=${page}`;
+  if (query) return `/?search=${query.toLowerCase()}`;
 
-  if (query) return `/?search=${query}`;
+  if (page) return `/?page=${page}`;
 
   return '';
 };
