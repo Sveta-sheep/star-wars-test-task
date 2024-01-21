@@ -1,9 +1,14 @@
 import { Box } from '@mui/material';
-import { CharacterDetailItem, CharacterDetailItemType } from 'components/CharacterDetailsView/CharacterDetailItem';
+import {
+  CharacterDetailItem,
+  CharacterDetailItemType,
+} from 'components/CharacterDetailsView/components/CharacterDetailItem';
+import { detailsWrapperSx } from 'components/CharacterDetailsView/styles';
 import { Loader } from 'components/Loader';
 import { capitalize } from 'helpers/capitalize';
 import { useCharacterStarship } from 'queries';
 import { useMemo } from 'react';
+import { useIsMobile } from 'styles/useIsMobile';
 
 type CharacterStarshipViewProps = {
   url: string;
@@ -11,6 +16,7 @@ type CharacterStarshipViewProps = {
 
 export const CharacterStarshipView = ({ url }: CharacterStarshipViewProps) => {
   const { characterStarship, isLoading } = useCharacterStarship(url);
+  const isMobile = useIsMobile();
 
   const characterStarshipDetailItems: CharacterDetailItemType[] = useMemo(
     () => [
@@ -31,15 +37,7 @@ export const CharacterStarshipView = ({ url }: CharacterStarshipViewProps) => {
   );
 
   return (
-    <Box
-      display='flex'
-      justifyContent='space-between'
-      alignItems='center'
-      borderBottom='1px solid white'
-      pb={2}
-      px={2}
-      mb={3}
-    >
+    <Box flexDirection={isMobile ? 'column' : 'row'} sx={detailsWrapperSx}>
       {isLoading ? (
         <Loader />
       ) : (

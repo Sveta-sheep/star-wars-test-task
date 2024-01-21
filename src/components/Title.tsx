@@ -1,12 +1,12 @@
-import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { useIsMobile } from 'styles/useIsMobile';
 
 type TitleProps = {
   description: string;
 };
 
 export const Title = ({ description }: TitleProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useIsMobile();
 
   return (
     <Stack alignItems='center'>

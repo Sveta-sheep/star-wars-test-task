@@ -1,17 +1,19 @@
 import { Box, Divider, Stack, Typography } from '@mui/material';
-import { CharacterDetailItem, CharacterDetailItemType } from 'components/CharacterDetailsView/CharacterDetailItem';
-import { CharacterSpeciesView } from 'components/CharacterDetailsView/CharacterSpeciesView';
-import { CharacterStarshipView } from 'components/CharacterDetailsView/CharacterStarshipView';
 import { Loader } from 'components/Loader';
 import { Title } from 'components/Title';
 import { capitalize } from 'helpers/capitalize';
 import { useCharacter } from 'queries';
 import { useMemo } from 'react';
+import { useIsMobile } from 'styles/useIsMobile';
+import { CharacterDetailItem, CharacterSpeciesView, CharacterStarshipView } from './components';
+import { CharacterDetailItemType } from './components/CharacterDetailItem';
+import { basicInfoDetailsWrapperSx, sectionDividerSx } from './styles';
 
 const headerDescription = 'Here is some of the details of character';
 
 export const CharacterDetailView = () => {
   const { character, isLoading } = useCharacter();
+  const isMobile = useIsMobile();
 
   const characterBasicInfoDetailItems: CharacterDetailItemType[] = useMemo(
     () => [
@@ -51,7 +53,7 @@ export const CharacterDetailView = () => {
     <>
       <Box>
         <SectionTitle title='Basic Information' />
-        <Box display='flex' justifyContent='space-between' alignItems='center'>
+        <Box flexDirection={isMobile ? 'column' : 'row'} sx={basicInfoDetailsWrapperSx}>
           {characterBasicInfoDetailItems.map((item, i) => (
             <CharacterDetailItem key={i} {...item} />
           ))}
@@ -89,8 +91,8 @@ type SectionTitleProps = {
 
 const SectionTitle = ({ title }: SectionTitleProps) => (
   <Stack gap={1} mb={2}>
-    <Divider sx={{ color: 'primary.main', border: '1px solid' }} />
+    <Divider sx={sectionDividerSx} />
     <Typography color='primary'>{title}</Typography>
-    <Divider sx={{ color: 'primary.main', border: '1px solid' }} />
+    <Divider sx={sectionDividerSx} />
   </Stack>
 );
