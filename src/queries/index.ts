@@ -1,0 +1,1 @@
+export { useGetCharacterList } from './useGetCharacterList';
