@@ -3,12 +3,15 @@ import { CharacterItem } from 'components/CharacterItem/CharacterItem';
 import { CharacterColumns } from 'components/CharacterList/CharacterColumns';
 import { headerDescription, noCharactersText } from 'components/CharacterList/constants';
 import { Loader } from 'components/Loader';
+import { Pagination } from 'components/Pagination/Pagination';
+import { CHARACTERS_PER_PAGE } from 'components/Pagination/usePagination';
 import { Title } from 'components/Title';
 import { useGetCharacterList } from 'queries';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 export const CharacterList = () => {
-  const { characterList, isLoading } = useGetCharacterList();
+  const [activePage, setActivePage] = useState(1);
+  const { characterList, count, isLoading } = useGetCharacterList({ page: activePage });
 
   const noCharactersJSX = useMemo(
     () => (
@@ -34,8 +37,10 @@ export const CharacterList = () => {
       <Title description={headerDescription} />
       <Box>
         <CharacterColumns />
-        {isLoading ? <Loader /> : charactersRowsJSX}
+        {/*57px is the height of one character item*/}
+        <Box minHeight={`calc(57px * ${CHARACTERS_PER_PAGE})`}>{isLoading ? <Loader /> : charactersRowsJSX}</Box>
       </Box>
+      <Pagination count={count} activePage={activePage} onChangePage={setActivePage} />
     </Stack>
   );
 };

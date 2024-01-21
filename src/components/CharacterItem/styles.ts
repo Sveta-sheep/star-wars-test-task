@@ -5,6 +5,7 @@ export const wrapperSx: SxProps = {
   justifyContent: 'space-between',
   borderBottom: '1px solid white',
   py: 2,
+  px: 0.5,
   cursor: 'pointer',
   transition: 'transform .2s ease-in-out',
   '&:hover': { opacity: 0.8, transform: 'scale(1.01)' },

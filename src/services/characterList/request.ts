@@ -1,4 +1,13 @@
 import axiosClient from 'api/axiosClient';
-import { GetCharacterListResponse } from 'services/characterList/types';
+import { GetCharacterListParams, GetCharacterListResponse } from 'services/characterList/types';
 
-export const getCharacterList = () => axiosClient.get<GetCharacterListResponse>('people');
+const getRequestParam = (page?: number, query?: string) => {
+  if (page) return `/?page=${page}`;
+
+  if (query) return `/?search=${query}`;
+
+  return '';
+};
+
+export const getCharacterList = ({ page, query }: GetCharacterListParams) =>
+  axiosClient.get<GetCharacterListResponse>(`people${getRequestParam(page, query)}`);
