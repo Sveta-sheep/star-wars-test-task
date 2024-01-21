@@ -17,6 +17,11 @@ export type CharacterItemDTO = {
   url: string;
 };
 
+export type GetCharacterListParams = {
+  query?: string;
+  page?: number;
+};
+
 export type GetCharacterListResponse = {
   count: number;
   next: string;
