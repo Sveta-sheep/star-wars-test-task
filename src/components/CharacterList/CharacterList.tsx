@@ -25,10 +25,7 @@ export const CharacterList = () => {
   );
 
   const characterItemJSX = useMemo(
-    () =>
-      characterList.map(({ name, height, birthYear, created }, index) => (
-        <CharacterItem key={index} name={name} birthYear={birthYear} height={height} createdAt={created} />
-      )),
+    () => characterList.map((item, index) => <CharacterItem key={index} {...item} />),
     [characterList]
   );
 
